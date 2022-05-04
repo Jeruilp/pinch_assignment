@@ -15,10 +15,10 @@ class GameResponse {
     this.cover,
     this.created,
     this.firstRelease,
-    // this.modes,
-    // this.genres,
-    // this.perspectives,
-    // this.screenshots,
+    this.modes,
+    this.genres,
+    this.perspectives,
+    this.screenshots,
     this.description,
     this.rating,
   });
@@ -28,10 +28,10 @@ class GameResponse {
   CoverResponse cover;
   int created;
   int firstRelease;
-  // List<ModeResponse> modes;
-  // List<GenreResponse> genres;
-  // List<PlayerPerspecResponse> perspectives;
-  // List<ScreenshotResponse> screenshots;
+  List<ModeResponse> modes;
+  List<GenreResponse> genres;
+  List<PlayerPerspecResponse> perspectives;
+  List<ScreenshotResponse> screenshots;
   String description;
   double rating;
 
@@ -43,10 +43,10 @@ class GameResponse {
       cover       : json["cover"] == null ? null : CoverResponse.fromJson(json["cover"]),
       created     : json["created_at"],
       firstRelease: json["first_release_date"],
-      // modes       : (json["game_modes"] as List).map((i) => ModeResponse.fromJson(i)).toList(),
-      // genres      : (json["genres"] as List).map((i) => GenreResponse.fromJson(i)).toList(),
-      // perspectives: (json["player_perspectives"] as List).map((i) => PlayerPerspecResponse.fromJson(i)).toList(),
-      // screenshots : (json["screenshots"] as List).map((i) => ScreenshotResponse.fromJson(i)).toList(),
+      modes       : json["game_modes"] == null ? null : (json["game_modes"] as List).map((i) => new ModeResponse.fromJson(i)).toList(),
+      genres      : json["genres"] == null ? null : (json["genres"] as List).map((i) => new GenreResponse.fromJson(i)).toList(),
+      perspectives: json["player_perspectives"] == null ? null : (json["player_perspectives"] as List).map((i) => new PlayerPerspecResponse.fromJson(i)).toList(),
+      screenshots : json["screenshots"] == null ? null : (json["screenshots"] as List).map((i) => new ScreenshotResponse.fromJson(i)).toList(),
       description : json["summary"],
       rating      : json["rating"],
     );

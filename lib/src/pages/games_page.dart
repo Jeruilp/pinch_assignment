@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toast/toast.dart';
 
 // BLOC import
 import 'package:pinch_assignment/src/bloc/games_bloc.dart';
@@ -22,25 +23,26 @@ class GamesPage extends StatefulWidget {
 class _GamesPageState extends State<GamesPage> {
   GameService gameService = new GameService();
   ScrollController _scrollController = new ScrollController();
-
+  
   @override
   void initState() {
     new Future.delayed(Duration.zero, () async {
+      ToastContext().init(context);
       final gamesBloc = BlocProvider.of<GamesBloc>(context);
       // Service to load the games data from API 
       final dynamic response = await gameService.getGames();
-      // if called ok, call to bloc event
       if (response != null) {
-        print(response);
+        // Add games data to BLOC 
         gamesBloc.add( OnLoadGamesEvent(response) );
       } else {
-        print('Error al recibir datos ${response.status}');
+        Toast.show("It's been a problem loading the data",
+          duration: 3,
+          gravity: Toast.center,
+          backgroundColor: Colors.black87);
       }
     });
- 
-    // Add games data to BLOC 
 
-    // Add games data to FLOOR (database)
+    // TODO Add games data to FLOOR (database)
     super.initState();
     
   }
@@ -48,11 +50,6 @@ class _GamesPageState extends State<GamesPage> {
 
   @override
   Widget build(BuildContext context) {
-    // GameResponse game = new GameResponse();
-    // game.name = 'Pokemon';
-    // game.cover.url = 'uri image';
-    // game.description = 'asdfasdfasdf';
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Games'),
@@ -67,18 +64,15 @@ class _GamesPageState extends State<GamesPage> {
       body: BlocBuilder<GamesBloc, GamesState>(
         builder: (context, state) {
           return state.existGames 
-            ? Column(
-              children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  controller: _scrollController,
-                  itemCount: state.gamesList.games.length,
-                  itemBuilder: (_, i) {
-                    return GameCard(game: state.gamesList.games[i]);
-                  },
-                )
-              ])
-            // TODO este widget crearlo a parte
+            ? ListView.builder(
+              shrinkWrap: true,
+              controller: _scrollController,
+              itemCount: state.gamesList.games.length,
+              itemBuilder: (_, i) {
+                return GameCard(game: state.gamesList.games[i]);
+              },
+            )
+            // TODO create a widget 
             : const Center(child:Text('No hay juegos cargados'));
         },
       )

@@ -33,17 +33,12 @@ class GameService {
     try {
       final resp = await this._dio.post(
         url, 
-        data: "fields age_ratings,aggregated_rating,aggregated_rating_count,checksum,cover.*,created_at,first_release_date,game_modes.*,genres.*,name,platforms,player_perspectives.*,rating,release_dates,screenshots.*,status,storyline,summary,tags,themes;",
+        data: "fields age_ratings,aggregated_rating,aggregated_rating_count,checksum,cover.*,created_at,first_release_date,game_modes.*,genres.*,name,platforms,player_perspectives.*,rating,release_dates,screenshots.*,status,storyline,summary,tags,themes; where cover.image_id != null & genres != null; limit 100;",
         options: Options(headers: headers));
-        print(resp.data);
-        print(resp.statusCode);
         final data = GameResponseList.fromJson(resp.data);
-        print(data);
       return data;
     } catch (e) {
 
     }
   }
-
-  // TODO getSlider con otro body cogido de igbd ??
 }

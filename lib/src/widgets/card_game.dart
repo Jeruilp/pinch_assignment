@@ -17,7 +17,7 @@ class GameCard extends StatelessWidget {
     // final gameImage = game.cover.url;
     // final gameDescrip = game.description;
     // print(game.description);
-    print(game.cover.url);
+    // print(game.cover.url);
 
     final size = MediaQuery.of(context).size;
 
@@ -32,7 +32,8 @@ class GameCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(15.0)
           ),
          elevation  : 5.0,
-         primary    : Colors.black,
+         primary    : Colors.white,
+         onPrimary  : Colors.black,
          side       : BorderSide(color: Colors.grey.shade700, width: 0.5),
          shadowColor: Colors.grey.shade700,
         ),
