@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 // Models Import
 import 'package:pinch_assignment/src/models/models.dart';
@@ -13,47 +14,84 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameName  = game.name;
-    // final gameImage = game.cover.url;
-    // final gameDescrip = game.description;
-    // print(game.description);
-    // print(game.cover.url);
 
-    final size = MediaQuery.of(context).size;
-
-    return Container(
-      color  : Colors.white, 
-      // width  : size.width * 0.75,
-      padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-      child  : ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-          shape  : RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0)
-          ),
-         elevation  : 5.0,
-         primary    : Colors.white,
-         onPrimary  : Colors.black,
-         side       : BorderSide(color: Colors.grey.shade700, width: 0.5),
-         shadowColor: Colors.grey.shade700,
-        ),
-
-        // TODO navigator.pushnamed(context, 'game_Detail', arguments: this.game)
-        onPressed: () {},
-        child: FittedBox(
-          fit  : BoxFit.contain,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(gameName),
-              // Text(gameImage),
-              // Text(gameDescrip)
-            ],
-          )
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, 'game_detail', arguments: this.game);
+      },
+      
+      child: Container(
+        padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+        height : 200.0,
+        child: Row(
+          children: [
+            Hero(
+              tag  : game.id,
+              child: AspectRatio(
+                aspectRatio: 3/4,
+                child: Container(
+                  decoration  : BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    image       : DecorationImage(
+                      image: NetworkImage("https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.imageId}.jpg"),
+                      fit  : BoxFit.cover
+                    ),
+                ),
+                ),
+              ),
+            ),
+            SizedBox( width: 15.0 ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment : MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        game.name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color     : Colors.black,
+                          fontSize  : 18.0
+                        )),
+                        SizedBox( height: 15.0 ),
+                        Text(
+                          game.description,
+                          overflow : TextOverflow.ellipsis,
+                          maxLines : 4,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            color   : Colors.black87,
+                            fontSize: 14.0
+                          )),
+                        SizedBox( height: 25.0 ),
+                        RatingBar(
+                          itemSize : 16.0,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          itemCount: 5,
+                          initialRating  : game.rating / 20,
+                          allowHalfRating: true,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                          ratingWidget: RatingWidget(
+                            full : Icon(Icons.star, color: Colors.deepOrange),
+                            half : Icon(Icons.star_half, color: Colors.deepOrange),
+                            empty: Icon(Icons.star_border, color: Colors.deepOrange)
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       )
-      // width: double.infinity, 
-      // height: 500,
     );
   }
 }

@@ -56,7 +56,6 @@ class GameResponse {
 
 
 // Model for a list of games
-
 GameResponseList gameResponseListFromJson(String str) =>
     GameResponseList.fromJson(json.decode(str));
 

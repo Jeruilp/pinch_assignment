@@ -33,7 +33,7 @@ class GameService {
     try {
       final resp = await this._dio.post(
         url, 
-        data: "fields age_ratings,aggregated_rating,aggregated_rating_count,checksum,cover.*,created_at,first_release_date,game_modes.*,genres.*,name,platforms,player_perspectives.*,rating,release_dates,screenshots.*,status,storyline,summary,tags,themes; where cover.image_id != null & genres != null; limit 100;",
+        data: "fields age_ratings,aggregated_rating,aggregated_rating_count,checksum,cover.*,created_at,first_release_date,game_modes.*,genres.*,name,platforms,player_perspectives.*,rating,release_dates,screenshots.*,status,storyline,summary,tags,themes; where cover.image_id != null & genres != null; limit 40;",
         options: Options(headers: headers));
         final data = GameResponseList.fromJson(resp.data);
       return data;
