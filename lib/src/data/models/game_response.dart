@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 // Models import
-import 'package:pinch_assignment/src/models/models.dart';
+import 'package:pinch_assignment/src/data/models/models.dart';
 
 
 // Model for a single game

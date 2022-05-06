@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pinch_assignment/src/models/game_response.dart';
+
+import 'package:pinch_assignment/src/data/models/game_response.dart';
+import 'package:pinch_assignment/src/presentation/widgets/widgets.dart';
 
 class GameDetailPage extends StatelessWidget {
   
@@ -13,8 +15,16 @@ class GameDetailPage extends StatelessWidget {
         title: Text('Game Detail'),
         centerTitle: true,
       ),
-      body: Text(game.name)
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            GameDetailBody(game: game),
+            GameDetailScreenSlider(game: game)
+          ],
+        ),
+      )
       
     );
   }
 }
+

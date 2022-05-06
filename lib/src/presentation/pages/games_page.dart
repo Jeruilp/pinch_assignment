@@ -3,16 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toast/toast.dart';
 
 // BLOC import
-import 'package:pinch_assignment/src/bloc/games_bloc.dart';
-
-// Model import
-import 'package:pinch_assignment/src/models/models.dart';
-
+import 'package:pinch_assignment/src/presentation/bloc/games_bloc.dart';
 // Service import
-import 'package:pinch_assignment/src/services/game_service.dart';
-
+import 'package:pinch_assignment/src/data/services/game_service.dart';
 // Widgets import
-import 'package:pinch_assignment/src/widgets/card_game.dart';
+import 'package:pinch_assignment/src/presentation/widgets/card_game.dart';
 
 
 class GamesPage extends StatefulWidget {
@@ -21,18 +16,15 @@ class GamesPage extends StatefulWidget {
 }
 
 class _GamesPageState extends State<GamesPage> {
-  GameService gameService = new GameService();
+  
   ScrollController _scrollController = new ScrollController();
   
   @override
   void initState() {
-    // new Future.delayed(Duration.zero, () async {
-
-      _pullRefresh();
-     
-    // });
-
+    
+      _loadGames();
     // TODO Add games data to FLOOR (database)
+    
     super.initState();
     
   }
@@ -49,9 +41,10 @@ class _GamesPageState extends State<GamesPage> {
       ),
       body: BlocBuilder<GamesBloc, GamesState>(
         builder: (context, state) {
+          // TODO condición isLoading ? CircularProgress : ¿null?
           return state.existGames 
             ? RefreshIndicator(
-              onRefresh: _pullRefresh,
+              onRefresh: _loadGames,
               child: ListView.builder(
                 physics    : BouncingScrollPhysics(),
                 shrinkWrap : true,
@@ -69,9 +62,14 @@ class _GamesPageState extends State<GamesPage> {
   }
 
   // Function to load/refresh games data
-  Future<void> _pullRefresh() async {
-    final dynamic response = await gameService.getGames();
+  // TODO esto va al game Service, y el game service llama a remote o local y des
+  // pues agrega al bloc la data
+  Future<void> _loadGames() async {
+    GameService _gameService = new GameService();
+    final dynamic response = await _gameService.getGames();
     final gamesBloc = BlocProvider.of<GamesBloc>(context);
+    //TODO
+    print(response);
       if (response != null) {
         // Add games data to BLOC 
         gamesBloc.add( OnLoadGamesEvent(response) );

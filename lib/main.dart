@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:toast/toast.dart';
 
 // Bloc import
-import 'package:pinch_assignment/src/bloc/games_bloc.dart';
+import 'package:pinch_assignment/src/presentation/bloc/games_bloc.dart';
 
 // Pages Import
-import 'package:pinch_assignment/src/pages/pages.dart';
+import 'package:pinch_assignment/src/presentation/pages/pages.dart';
 
 
 void main() => runApp(MyApp());
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
            const Locale('es', 'ES'),
          ],
         debugShowCheckedModeBanner: false,
-        title: 'Greenspot',
+        title: 'PinchGames',
         initialRoute: 'games',
         routes: {
          'games'      : (_) => GamesPage(),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 // Models Import
-import 'package:pinch_assignment/src/models/models.dart';
+import 'package:pinch_assignment/src/data/models/models.dart';
 
 class GameCard extends StatelessWidget {
   final GameResponse game; 

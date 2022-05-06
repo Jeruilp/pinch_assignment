@@ -1,35 +1,37 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 
+import 'package:pinch_assignment/src/data/datasource/remote/remote.dart';
 // Ctes import
-import 'package:pinch_assignment/utils/ctes.dart';
+import 'package:pinch_assignment/src/presentation/utils/ctes.dart';
 // Models import
-import 'package:pinch_assignment/src/models/models.dart';
+import 'package:pinch_assignment/src/data/models/models.dart';
 
 
-class GameService {
-  GameService._privateConstructor();
-  static final GameService _instance = 
-    GameService._privateConstructor();
+class DioRemote extends Remote {
+  // GameService._privateConstructor();
+  // static final GameService _instance = 
+  //   GameService._privateConstructor();
   
-  factory GameService() {
-    return _instance; 
-  }
+  // factory GameService() {
+  //   return _instance; 
+  // }
 
-  final _dio = new Dio();
-
+  final Dio _dio; 
+  DioRemote(this._dio);
+  
+  final url      = igdb_uri;
+  final token    = bearer_token;
+  final clientId = client_id;
+  
+  @override
   Future<GameResponseList> getGames( ) async {
-
-    final url      = igdb_uri;
-    final token    = bearer_token;
-    final clientId = client_id;
 
     Map<String, dynamic> headers = {
       HttpHeaders.contentTypeHeader: "application/json",
-      "Client-ID": clientId,
+      "Client-ID"    : clientId,
       "Authorization": token,
     };
-
     try {
       final resp = await this._dio.post(
         url, 
@@ -38,7 +40,7 @@ class GameService {
         final data = GameResponseList.fromJson(resp.data);
       return data;
     } catch (e) {
-
+      // TODO 
     }
   }
 }
