@@ -16,6 +16,11 @@ class GamesBloc extends Bloc<GamesEvent, GamesState> {
       print('OnLoadGamesEvent CALLED');
       emit( GamesSetState( event.games ));
     });
+
+    on<LoadingGamesEvent>( (event, emit) {
+      print('GamesLoadingState CALLED');
+      emit( GamesLoadingState( event.isLoading ));
+    });
   }
 
 }

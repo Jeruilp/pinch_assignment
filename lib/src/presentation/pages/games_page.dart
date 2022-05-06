@@ -42,7 +42,7 @@ class _GamesPageState extends State<GamesPage> {
       body: BlocBuilder<GamesBloc, GamesState>(
         builder: (context, state) {
           // TODO condición isLoading ? CircularProgress : ¿null?
-          return state.existGames 
+          return state.existGames && !state.isLoading
             ? RefreshIndicator(
               onRefresh: _loadGames,
               child: ListView.builder(
@@ -54,8 +54,7 @@ class _GamesPageState extends State<GamesPage> {
                 },
               ),
             )
-            // TODO create a widget 
-            : const Center(child:Text('No loaded games'));
+            : Center(child: CircularProgressIndicator());
         },
       )
     );
@@ -66,10 +65,12 @@ class _GamesPageState extends State<GamesPage> {
   // pues agrega al bloc la data
   Future<void> _loadGames() async {
     GameService _gameService = new GameService();
-    final dynamic response = await _gameService.getGames();
     final gamesBloc = BlocProvider.of<GamesBloc>(context);
-    //TODO
-    print(response);
+
+    gamesBloc.add( LoadingGamesEvent(true));
+
+    final dynamic response = await _gameService.getGames();
+
       if (response != null) {
         // Add games data to BLOC 
         gamesBloc.add( OnLoadGamesEvent(response) );
