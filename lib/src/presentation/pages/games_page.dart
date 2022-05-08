@@ -16,17 +16,13 @@ class GamesPage extends StatefulWidget {
 }
 
 class _GamesPageState extends State<GamesPage> {
-  
-  ScrollController _scrollController = new ScrollController();
-  
+    
   @override
   void initState() {
     
-      _loadGames();
-    // TODO Add games data to FLOOR (database)
+    _loadGames();
     
     super.initState();
-    
   }
 
 
@@ -41,16 +37,15 @@ class _GamesPageState extends State<GamesPage> {
       ),
       body: BlocBuilder<GamesBloc, GamesState>(
         builder: (context, state) {
-          // TODO condición isLoading ? CircularProgress : ¿null?
           return state.existGames && !state.isLoading
             ? RefreshIndicator(
               onRefresh: _loadGames,
               child: ListView.builder(
                 physics    : BouncingScrollPhysics(),
                 shrinkWrap : true,
-                itemCount  : state.gamesList.games.length,
+                itemCount  : state.gamesList.length,
                 itemBuilder: (_, i) {
-                  return GameCard(game: state.gamesList.games[i]);
+                  return GameCard(game: state.gamesList[i]);
                 },
               ),
             )
@@ -61,25 +56,25 @@ class _GamesPageState extends State<GamesPage> {
   }
 
   // Function to load/refresh games data
-  // TODO esto va al game Service, y el game service llama a remote o local y des
-  // pues agrega al bloc la data
+  // Llamada a servicio el game service llama a remote o local y des
+  // ADDS to BLOC
   Future<void> _loadGames() async {
     GameService _gameService = new GameService();
     final gamesBloc = BlocProvider.of<GamesBloc>(context);
 
-    gamesBloc.add( LoadingGamesEvent(true));
+    gamesBloc.add( LoadingGamesEvent());
 
+    // Get games service 
     final dynamic response = await _gameService.getGames();
 
       if (response != null) {
         // Add games data to BLOC 
         gamesBloc.add( OnLoadGamesEvent(response) );
       } else {
-        Toast.show("It's been a problem loading the data",
-          duration: 3,
-          gravity: Toast.center,
-          backgroundColor: Colors.black87);
+      //   Toast.show("It's been a problem loading the data",
+      //     duration: 3,
+      //     gravity: Toast.center,
+      //     backgroundColor: Colors.black87);
       }
-      //TODO add data to FLOOR
   }
 }

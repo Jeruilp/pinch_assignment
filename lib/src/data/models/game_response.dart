@@ -2,6 +2,7 @@ import 'dart:convert';
 
 // Models import
 import 'package:pinch_assignment/src/data/models/models.dart';
+import 'package:pinch_assignment/src/domain/model/game.dart';
 
 
 // Model for a single game
@@ -13,11 +14,7 @@ class GameResponse {
     this.id,
     this.name,
     this.cover,
-    this.created,
-    this.firstRelease,
-    this.modes,
-    this.genres,
-    this.perspectives,
+    this.coverId,
     this.screenshots,
     this.description,
     this.rating,
@@ -26,11 +23,7 @@ class GameResponse {
   int id; 
   String name;
   CoverResponse cover;
-  int created;
-  int firstRelease;
-  List<ModeResponse> modes;
-  List<GenreResponse> genres;
-  List<PlayerPerspecResponse> perspectives;
+  String coverId; 
   List<ScreenshotResponse> screenshots;
   String description;
   double rating;
@@ -41,15 +34,47 @@ class GameResponse {
       id          : json["id"],
       name        : json["name"],
       cover       : json["cover"] == null ? null : CoverResponse.fromJson(json["cover"]),
-      created     : json["created_at"],
-      firstRelease: json["first_release_date"],
-      modes       : json["game_modes"] == null ? null : (json["game_modes"] as List).map((i) => new ModeResponse.fromJson(i)).toList(),
-      genres      : json["genres"] == null ? null : (json["genres"] as List).map((i) => new GenreResponse.fromJson(i)).toList(),
-      perspectives: json["player_perspectives"] == null ? null : (json["player_perspectives"] as List).map((i) => new PlayerPerspecResponse.fromJson(i)).toList(),
+      coverId     : json["cover"] == null ? null : CoverResponse.fromJson(json["cover"]).imageId,
       screenshots : json["screenshots"] == null ? null : (json["screenshots"] as List).map((i) => new ScreenshotResponse.fromJson(i)).toList(),
       description : json["summary"],
       rating      : json["rating"],
     );
+
+
+
+    Map<String, dynamic> toMap() {
+      final Map<String, dynamic> data = new Map<String, dynamic>();
+      data['id'] = this.id;
+      data['name'] = this.name; 
+      data['coverId'] = this.cover.imageId;
+      data['description'] = this.description;
+      data['rating'] = this.rating; 
+      data['screenshots'] = (this.screenshots).map((e) => e.imageId);
+      return data; 
+    }
+  
+  // factory GameResponse.fromGame(Game game) {
+  //   return GameResponse(
+  //     id  : game.id,
+  //     name: game.name,
+  //     coverId: game.coverId,
+  //     rating : game.rating,
+  //     description: game.description,
+
+  //   );
+  // }
+
+  Game toGame() {
+
+    return Game(
+      this.id,
+      this.name, 
+      this.cover.imageId,
+      this.description,
+      this.rating,
+      (this.screenshots.map((e) => e.imageId)).toList(),
+    );
+  }
   
 }
 
@@ -61,17 +86,25 @@ GameResponseList gameResponseListFromJson(String str) =>
 
 class GameResponseList {
   GameResponseList({
-    this.games, 
+    this.list, 
   });
 
-  List<GameResponse> games;
+  List<GameResponse> list;
 
 
  factory GameResponseList.fromJson(List json) =>
     GameResponseList(
-      games: json.map((i) => new GameResponse.fromJson(i)).toList(),
+      list: json.map((i) => new GameResponse.fromJson(i)).toList(),
     );
 
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String,dynamic>();
+    if (this.list != null) {
+      data['list'] = this.list.map((v) => v.toMap()).toList();
+    }
+    return data; 
+  }
 }
 
 

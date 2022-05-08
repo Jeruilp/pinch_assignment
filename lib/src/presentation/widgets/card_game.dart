@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 // Models Import
-import 'package:pinch_assignment/src/data/models/models.dart';
+import 'package:pinch_assignment/src/domain/model/game.dart';
 
 class GameCard extends StatelessWidget {
-  final GameResponse game; 
+  final Game game; 
 
   const GameCard({
     Key key,
@@ -33,7 +33,7 @@ class GameCard extends StatelessWidget {
                   decoration  : BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     image       : DecorationImage(
-                      image: NetworkImage("https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.imageId}.jpg"),
+                      image: NetworkImage("https://images.igdb.com/igdb/image/upload/t_cover_big/${game.coverId}.jpg"),
                       fit  : BoxFit.cover
                     ),
                 ),

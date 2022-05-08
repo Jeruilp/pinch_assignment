@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pinch_assignment/src/data/models/models.dart';
+import 'package:pinch_assignment/src/domain/model/game.dart';
 
 class GameDetailBody extends StatelessWidget {
   const GameDetailBody({
@@ -8,7 +8,7 @@ class GameDetailBody extends StatelessWidget {
     @required this.game,
   }) : super(key: key);
 
-  final GameResponse game;
+  final Game game;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class GameDetailBody extends StatelessWidget {
               shape: BoxShape.circle,
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: NetworkImage("https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.imageId}.jpg")
+                image: NetworkImage("https://images.igdb.com/igdb/image/upload/t_cover_big/${game.coverId}.jpg")
               )
             ),
           ),
@@ -62,7 +62,7 @@ class GameDetailScreenSlider extends StatelessWidget {
     @required this.game,
   }) : super(key: key);
 
-  final GameResponse game; 
+  final Game game; 
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +99,7 @@ class _Screenshot extends StatelessWidget {
     @required this.screenshot,
   }) : super(key: key);
 
-  final ScreenshotResponse screenshot; 
+  final String screenshot; 
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class _Screenshot extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         child: FadeInImage(
           placeholder: AssetImage('assets/no-image.jpg'), 
-          image: NetworkImage("https://images.igdb.com/igdb/image/upload/t_cover_big/${screenshot.imageId}.jpg"),
+          image: NetworkImage("https://images.igdb.com/igdb/image/upload/t_cover_big/${screenshot}.jpg"),
           width: 130,
           height: 190,
           fit: BoxFit.cover),

@@ -1,5 +1,5 @@
-import 'package:pinch_assignment/src/data/models/models.dart';
+// import 'package:pinch_assignment/src/data/models/models.dart';
 
-abstract class Remote {
-  Future<GameResponseList> getGames();
-}
+// abstract class Remote {
+//   Future<GameResponseList> getGames();
+// }

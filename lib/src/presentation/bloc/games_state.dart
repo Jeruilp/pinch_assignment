@@ -5,7 +5,7 @@ part of 'games_bloc.dart';
 abstract class GamesState {
   final bool existGames;
   final bool isLoading; 
-  final GameResponseList gamesList;
+  final List<Game> gamesList;
 
   const GamesState({
     this.existGames = false,
@@ -19,13 +19,12 @@ class GamesInitialState extends GamesState {
 }
 
 class GamesSetState extends GamesState {
-  final GameResponseList newGames;
+  final List<Game> newGames;
   GamesSetState(this.newGames)
     : super( existGames: true, isLoading: false, gamesList: newGames );
 }
 
 class GamesLoadingState extends GamesState {
-  final newIsLoading;
-  GamesLoadingState(this.newIsLoading)
+  GamesLoadingState()
     : super( isLoading: true);
 }
