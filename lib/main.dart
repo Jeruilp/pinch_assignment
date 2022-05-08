@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+// Locator import
+import 'package:pinch_assignment/src/di/locator.dart';
 // Bloc import
 import 'package:pinch_assignment/src/presentation/bloc/games_bloc.dart';
-
 // Pages Import
 import 'package:pinch_assignment/src/presentation/pages/pages.dart';
 
 
-void main() => runApp(MyApp());
+void main() {
+  setupLocator();
+  runApp(MyApp());
+
+} 
 
 class MyApp extends StatelessWidget {
   @override

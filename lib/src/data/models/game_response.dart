@@ -52,20 +52,9 @@ class GameResponse {
       data['screenshots'] = (this.screenshots).map((e) => e.imageId);
       return data; 
     }
-  
-  // factory GameResponse.fromGame(Game game) {
-  //   return GameResponse(
-  //     id  : game.id,
-  //     name: game.name,
-  //     coverId: game.coverId,
-  //     rating : game.rating,
-  //     description: game.description,
 
-  //   );
-  // }
 
   Game toGame() {
-
     return Game(
       this.id,
       this.name, 

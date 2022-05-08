@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 
-// Models import
-import 'package:pinch_assignment/src/data/models/models.dart';
 import 'package:pinch_assignment/src/domain/model/game.dart';
 
 part 'games_event.dart';

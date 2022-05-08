@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toast/toast.dart';
-
+// Locator import
+import 'package:pinch_assignment/src/di/locator.dart';
 // BLOC import
 import 'package:pinch_assignment/src/presentation/bloc/games_bloc.dart';
 // Service import
@@ -55,26 +56,24 @@ class _GamesPageState extends State<GamesPage> {
     );
   }
 
-  // Function to load/refresh games data
-  // Llamada a servicio el game service llama a remote o local y des
-  // ADDS to BLOC
+
+
   Future<void> _loadGames() async {
-    GameService _gameService = new GameService();
-    final gamesBloc = BlocProvider.of<GamesBloc>(context);
+    GameService _gameService = locator<GameService>();
+    final _gamesBloc = BlocProvider.of<GamesBloc>(context);
 
-    gamesBloc.add( LoadingGamesEvent());
+    _gamesBloc.add( LoadingGamesEvent());
 
-    // Get games service 
+    // Game service
     final dynamic response = await _gameService.getGames();
-
       if (response != null) {
         // Add games data to BLOC 
-        gamesBloc.add( OnLoadGamesEvent(response) );
+        _gamesBloc.add( OnLoadGamesEvent(response) );
       } else {
-      //   Toast.show("It's been a problem loading the data",
-      //     duration: 3,
-      //     gravity: Toast.center,
-      //     backgroundColor: Colors.black87);
+        Toast.show("It's been a problem loading the data",
+          duration: 3,
+          gravity: Toast.center,
+          backgroundColor: Colors.black87);
       }
   }
 }

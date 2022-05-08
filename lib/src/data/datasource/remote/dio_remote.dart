@@ -1,27 +1,15 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 
-// Ctes import
-import 'package:pinch_assignment/src/presentation/utils/ctes.dart';
-// Models import
 import 'package:pinch_assignment/src/domain/model/game.dart';
 import 'package:pinch_assignment/src/data/models/models.dart';
+import 'package:pinch_assignment/src/presentation/utils/ctes.dart';
 
 
 class DioRemote {
- 
-
-  DioRemote._privateConstructor();
-  static final DioRemote _instance = 
-    DioRemote._privateConstructor();
-  
-  factory DioRemote() {
-    return _instance; 
-  }
 
   final _dio = new Dio();
   
-
   @override
   Future<List<Game>> getGames( ) async {
 
